@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <h3 id="UserName">
+
+  </h3>
+
+  <form id="loginForm">
+    <label for="user">Uusario(email)</label>
+    <input type="email" id="user">
+    <label for="password">contrase</label>
+    <input type="password" id="password">
+    <button onclick="loginFunction">
+      Entrar
+    </button>
+  </form>
+
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDGQYxeXjsOITL8TaLE8f3Nc1mdGJJ2vYs",
+      authDomain: "test-ded30.firebaseapp.com",
+      databaseURL: "https://test-ded30.firebaseio.com",
+      projectId: "test-ded30",
+      storageBucket: "test-ded30.appspot.com",
+      messagingSenderId: "276491513770",
+      appId: "1:276491513770:web:dfbfd3fcab06f4d224c5d3",
+      measurementId: "G-P39F1NVLTN"
+    };
+
+    function loginFunction() {
+
+      let formUser = document.getElementById("user").value;
+      let formPassword = document.getElementById("password").value;
+      console.log(formUser);
+      console.log(formPassword);
+      firebase.auth().signInWithEmailAndPassword(formUser, formPassword)
+        .then((userCredential) => {
+          let user = userCredential.user;
+          let title = document.getElementById("UserName");
+          title.append(JSON.stringify(user));
+          console.log(userCredential)
+          console.log("Ok login")
+        })
+        .catch((error) => {
+          console.log("error !!!!!!!")
+          console.log(error)
+          console.log()
+          let errorCode = error.code;
+          let errorMessage = error.message;
+        });
+      console.log("enddddddddddddddddd");
+
+
+    }
+
+    function logSubmit(event) {
+      event.preventDefault();
+      loginFunction();
+    }
+
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', logSubmit);
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      firebase.initializeApp(firebaseConfig);
+    }, false);
+
+  </script>
+</body>
+
+</html>
