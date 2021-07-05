@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div class="main-container">
+    <div class="card-d">
+      <div class="character-box">
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function httpGet(theUrl) {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", theUrl, false); // false for synchronous request
+      xmlHttp.send(null);
+      return xmlHttp.responseText;
+    }
+    
+    function drawCharacters(resiultObj){
+      results = resiultObj.results
+      results.forEach(element => {
+        console.log(element)
+        let elementConttent = document.createElement("div");
+        
+        let title = document.createElement("h3");
+        title.textContent = element.name;
+
+        let image = document.createElement("img");
+        image.src = element.image;
+        elementConttent.appendChild(title);
+        elementConttent.appendChild(image);
+
+        document.body.appendChild(elementConttent);
+      });
+    
+    }
+
+    let url = "https://rickandmortyapi.com/api";
+    let charactersUrl = "https://rickandmortyapi.com/api/character";
+    console.log(httpGet(url));
+    drawCharacters(JSON.parse(httpGet(charactersUrl)));
+  </script>
+</body>
+
+</html>
